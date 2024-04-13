@@ -1,0 +1,15 @@
+// vite.config.js
+import autoprefixer from 'file:///F:/canvas-minesweeper/canvas-minesweeper/node_modules/.pnpm/autoprefixer@10.4.19_postcss@8.4.38/node_modules/autoprefixer/lib/autoprefixer.js';
+var vite_config_default = {
+  server: {
+    host: true,
+    port: 8080,
+  },
+  css: {
+    postcss: {
+      plugins: [autoprefixer],
+    },
+  },
+};
+export { vite_config_default as default };
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcuanMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCJGOlxcXFxjYW52YXMtbWluZXN3ZWVwZXJcXFxcY2FudmFzLW1pbmVzd2VlcGVyXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ZpbGVuYW1lID0gXCJGOlxcXFxjYW52YXMtbWluZXN3ZWVwZXJcXFxcY2FudmFzLW1pbmVzd2VlcGVyXFxcXHZpdGUuY29uZmlnLmpzXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ltcG9ydF9tZXRhX3VybCA9IFwiZmlsZTovLy9GOi9jYW52YXMtbWluZXN3ZWVwZXIvY2FudmFzLW1pbmVzd2VlcGVyL3ZpdGUuY29uZmlnLmpzXCI7aW1wb3J0IGF1dG9wcmVmaXhlciBmcm9tICdhdXRvcHJlZml4ZXInO1xuXG5leHBvcnQgZGVmYXVsdCB7XG4gIHNlcnZlcjoge1xuICAgIGhvc3Q6IHRydWUsXG4gICAgcG9ydDogODA4MCxcbiAgfSxcbiAgY3NzOiB7XG4gICAgcG9zdGNzczoge1xuICAgICAgcGx1Z2luczogW2F1dG9wcmVmaXhlcl0sXG4gICAgfSxcbiAgfSxcbn07XG4iXSwKICAibWFwcGluZ3MiOiAiO0FBQWdULE9BQU8sa0JBQWtCO0FBRXpVLElBQU8sc0JBQVE7QUFBQSxFQUNiLFFBQVE7QUFBQSxJQUNOLE1BQU07QUFBQSxJQUNOLE1BQU07QUFBQSxFQUNSO0FBQUEsRUFDQSxLQUFLO0FBQUEsSUFDSCxTQUFTO0FBQUEsTUFDUCxTQUFTLENBQUMsWUFBWTtBQUFBLElBQ3hCO0FBQUEsRUFDRjtBQUNGOyIsCiAgIm5hbWVzIjogW10KfQo=

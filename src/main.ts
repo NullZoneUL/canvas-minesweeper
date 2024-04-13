@@ -1,24 +1,24 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { difficultySizes } from './utils/difficulty';
+import './style.css';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const canvas = document.getElementById('layout') as HTMLCanvasElement;
+const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const setSizeByDifficulty = (level: number) => {
+  const sizes = difficultySizes[level];
+  if (!sizes) {
+    return;
+  }
+  canvas.width = sizes[0];
+  canvas.height = sizes[1];
+  ctx.fillStyle = '#bdbdbd';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+};
+
+const displayHideButton = () => {
+  console.log('Button clicked!!');
+};
+
+setSizeByDifficulty(0);
+
+export { displayHideButton };
