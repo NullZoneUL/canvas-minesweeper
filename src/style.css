@@ -32,3 +32,11 @@ main {
   transform: translateY(-50%);
   position: relative;
 }
+
+.center > ul {
+  padding: 0;
+}
+
+.center > ul > li {
+  list-style: none;
+}

@@ -1,1 +1,4 @@
-export const difficulty = [[722, 418]];
+export const difficultySizes = [
+  [722, 418],
+  [233, 233],
+];
