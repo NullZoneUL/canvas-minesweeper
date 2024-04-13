@@ -4,12 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
   "devDependencies": {
-    "husky": "^9.0.11",
+    "git-format-staged": "^3.1.1",
+    "husky": "^8.0.0",
     "prettier": "^3.2.5",
     "standard": "^17.1.0",
     "typescript": "^5.2.2",
