@@ -1,4 +1,7 @@
 export const difficultySizes = [
-  [722, 418],
-  [233, 233],
+  [8, 8],
+  [16, 16],
+  [32, 16],
 ];
+
+export const minesByDifficulty = [10, 40, 99];
