@@ -40,3 +40,7 @@ main {
 .center > ul > li {
   list-style: none;
 }
+
+.image-sources {
+  display: none;
+}
