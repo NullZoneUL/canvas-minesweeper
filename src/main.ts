@@ -1,13 +1,23 @@
 import createMap from './utils/createMap';
-import { difficultySizes } from './utils/difficulty';
-import { sectionSize, borderSize, headerSize } from './utils/sizes';
-import { uncheckedSectionImage } from './utils/images';
+import checkNumberLimits from './utils/checkNumberLimits';
+import getNumberByDigits from './utils/getNumberByDigits';
+import { difficultySizes, minesByDifficulty } from './utils/difficulty';
+import {
+  sectionSize,
+  borderSize,
+  headerSize,
+  counterHeight,
+  counterWidth,
+} from './utils/sizes';
+import { uncheckedSectionImage, imageNumbers } from './utils/images';
 import './style.css';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
 let map: MapSectionInterface[][] = [];
+let minesLeft: number;
+let timer: number;
 
 const setSizeByDifficulty = (difficulty: number) => {
   const sizes = difficultySizes[difficulty];
@@ -35,9 +45,46 @@ const printMap = () => {
   });
 };
 
+const printMineCounter = () => {
+  const numbersToPrint = getNumberByDigits(checkNumberLimits(minesLeft));
+  let x = borderSize;
+
+  numbersToPrint.forEach(number => {
+    ctx.drawImage(
+      imageNumbers[number],
+      x,
+      borderSize,
+      counterWidth,
+      counterHeight,
+    );
+    x += counterWidth;
+  });
+};
+
+const printTimerCounter = () => {
+  const numbersToPrint = getNumberByDigits(checkNumberLimits(timer));
+  let x = canvas.width - borderSize - counterWidth * 3;
+
+  numbersToPrint.forEach(number => {
+    ctx.drawImage(
+      imageNumbers[number],
+      x,
+      borderSize,
+      counterWidth,
+      counterHeight,
+    );
+    x += counterWidth;
+  });
+};
+
 const loadGame = (difficulty: number) => {
   setSizeByDifficulty(difficulty);
+  minesLeft = minesByDifficulty[difficulty];
+  timer = 0;
   map = createMap(difficulty);
+
+  printMineCounter();
+  printTimerCounter();
   printMap();
 };
 
