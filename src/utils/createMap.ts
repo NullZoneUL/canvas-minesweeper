@@ -1,4 +1,5 @@
 import getRandomNumber from './getRandomNumber';
+import getBoundaries from './getBoundaries';
 import { difficultySizes, minesByDifficulty } from './difficulty';
 
 const createMap = (difficulty: number) => {
@@ -23,13 +24,12 @@ const createMap = (difficulty: number) => {
       x = getRandomNumber(0, maxX);
     }
 
-    for (let y_ = y - 1; y_ < mapSize[1] && y_ <= y + 1; y_++) {
-      if (y_ > -1) {
-        for (let x_ = x - 1; x_ < mapSize[0] && x_ <= x + 1; x_++) {
-          x_ > -1 && map[y_][x_].nearbyMines++;
-        }
-      }
-    }
+    getBoundaries(
+      x,
+      y,
+      mapSize,
+      (x_: number, y_: number) => map[y_][x_].nearbyMines++,
+    );
 
     map[y][x].mine = true;
   });

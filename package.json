@@ -1,7 +1,7 @@
 {
   "name": "canvas-minesweeper",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
