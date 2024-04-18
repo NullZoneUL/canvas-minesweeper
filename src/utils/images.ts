@@ -1,8 +1,24 @@
-const uncheckedSectionImage = document.getElementById(
+export const uncheckedSectionImage = document.getElementById(
   'uncheckedSectionImage',
 ) as HTMLImageElement;
 
-const imageNumbers = [
+export const detonatedMineImage = document.getElementById(
+  'detonatedMineImage',
+) as HTMLImageElement;
+
+export const mapImageNumbers = [
+  document.getElementById('emptySectionImage') as HTMLImageElement,
+  document.getElementById('oneMapImage') as HTMLImageElement,
+  document.getElementById('twoMapImage') as HTMLImageElement,
+  document.getElementById('threeMapImage') as HTMLImageElement,
+  document.getElementById('fourMapImage') as HTMLImageElement,
+  document.getElementById('fiveMapImage') as HTMLImageElement,
+  document.getElementById('sixMapImage') as HTMLImageElement,
+  document.getElementById('sevenMapImage') as HTMLImageElement,
+  document.getElementById('eightMapImage') as HTMLImageElement,
+];
+
+export const counterImageNumbers = [
   document.getElementById('zeroImage') as HTMLImageElement,
   document.getElementById('oneImage') as HTMLImageElement,
   document.getElementById('twoImage') as HTMLImageElement,
@@ -15,5 +31,3 @@ const imageNumbers = [
   document.getElementById('nineImage') as HTMLImageElement,
   document.getElementById('minusImage') as HTMLImageElement,
 ];
-
-export { uncheckedSectionImage, imageNumbers };
