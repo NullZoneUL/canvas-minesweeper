@@ -9,7 +9,12 @@ import {
   counterHeight,
   counterWidth,
 } from './utils/sizes';
-import { uncheckedSectionImage, imageNumbers } from './utils/images';
+import {
+  uncheckedSectionImage,
+  counterImageNumbers,
+  mapImageNumbers,
+  detonatedMineImage,
+} from './utils/images';
 import './style.css';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
@@ -64,13 +69,36 @@ const printMap = () => {
   });
 };
 
+const updateMapItem = (x: number, y: number) => {
+  const item = map[y][x];
+  const mapXPosition = borderSize + x * sectionSize;
+  const mapYPosition = headerSize + y * sectionSize;
+  let imageToPrint = uncheckedSectionImage;
+
+  if (item.clicked) {
+    if (item.mine) {
+      imageToPrint = detonatedMineImage;
+    } else {
+      imageToPrint = mapImageNumbers[item.nearbyMines];
+    }
+  }
+
+  ctx.drawImage(
+    imageToPrint,
+    mapXPosition,
+    mapYPosition,
+    sectionSize,
+    sectionSize,
+  );
+};
+
 const printMineCounter = () => {
   const numbersToPrint = getNumberByDigits(checkNumberLimits(minesLeft));
   let x = borderSize;
 
   numbersToPrint.forEach(number => {
     ctx.drawImage(
-      imageNumbers[number],
+      counterImageNumbers[number],
       x,
       borderSize,
       counterWidth,
@@ -86,7 +114,7 @@ const printTimerCounter = () => {
 
   numbersToPrint.forEach(number => {
     ctx.drawImage(
-      imageNumbers[number],
+      counterImageNumbers[number],
       x,
       borderSize,
       counterWidth,
@@ -99,7 +127,17 @@ const printTimerCounter = () => {
 const mapItemClicked = (x: number, y: number) => {
   const mapPosX = Math.floor(x / sectionSize);
   const mapPosY = Math.floor(y / sectionSize);
-  console.log(mapPosY, mapPosX); //TODO!! Add click logic here
+  const item = map[mapPosY][mapPosX];
+
+  item.clicked = true;
+  item.mine && lostGame();
+
+  updateMapItem(mapPosX, mapPosY);
+};
+
+const lostGame = () => {
+  //TODO!! Add behavior here
+  console.log('You lose!!!');
 };
 
 const loadGame = (difficulty: number) => {
