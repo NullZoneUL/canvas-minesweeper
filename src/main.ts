@@ -18,6 +18,24 @@ const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 let map: MapSectionInterface[][] = [];
 let minesLeft: number;
 let timer: number;
+let canvasRect: DOMRect;
+
+canvas.addEventListener('click', e => {
+  const mousePos = {
+    x: e.clientX - canvasRect.left,
+    y: e.clientY - canvasRect.top,
+  };
+
+  if (isClickOnMap(mousePos)) {
+    mapItemClicked(mousePos.x - borderSize, mousePos.y - headerSize);
+  }
+});
+
+const isClickOnMap = (mousePos: { x: number; y: number }) =>
+  mousePos.y > headerSize &&
+  mousePos.y < canvas.height - borderSize &&
+  mousePos.x > borderSize &&
+  mousePos.x < canvas.width - borderSize;
 
 const setSizeByDifficulty = (difficulty: number) => {
   const sizes = difficultySizes[difficulty];
@@ -27,6 +45,7 @@ const setSizeByDifficulty = (difficulty: number) => {
 
   canvas.width = sizes[0] * sectionSize + borderSize * 2;
   canvas.height = sizes[1] * sectionSize + headerSize + borderSize;
+  canvasRect = canvas.getBoundingClientRect();
   ctx.fillStyle = '#bdbdbd';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 };
@@ -75,6 +94,12 @@ const printTimerCounter = () => {
     );
     x += counterWidth;
   });
+};
+
+const mapItemClicked = (x: number, y: number) => {
+  const mapPosX = Math.floor(x / sectionSize);
+  const mapPosY = Math.floor(y / sectionSize);
+  console.log(mapPosY, mapPosX); //TODO!! Add click logic here
 };
 
 const loadGame = (difficulty: number) => {
