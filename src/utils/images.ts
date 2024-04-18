@@ -13,6 +13,7 @@ const imageNumbers = [
   document.getElementById('sevenImage') as HTMLImageElement,
   document.getElementById('eightImage') as HTMLImageElement,
   document.getElementById('nineImage') as HTMLImageElement,
+  document.getElementById('minusImage') as HTMLImageElement,
 ];
 
 export { uncheckedSectionImage, imageNumbers };
