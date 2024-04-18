@@ -1,20 +1,25 @@
 import createMap from './utils/createMap';
 import checkNumberLimits from './utils/checkNumberLimits';
 import getNumberByDigits from './utils/getNumberByDigits';
-import { difficultySizes, minesByDifficulty } from './utils/difficulty';
+import getMapPosition from './utils/getMapPosition';
+import getMapClickPosition from './utils/getMapClickPosition';
 import {
   sectionSize,
   borderSize,
   headerSize,
   counterHeight,
   counterWidth,
-} from './utils/sizes';
+} from './sizes';
 import {
   uncheckedSectionImage,
   counterImageNumbers,
   mapImageNumbers,
   detonatedMineImage,
-} from './utils/images';
+  flagImage,
+  questionMarkImage,
+} from './images';
+import { SectionStates } from './sectionStates';
+import { difficultySizes, minesByDifficulty } from './utils/difficulty';
 import './style.css';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
@@ -32,7 +37,21 @@ canvas.addEventListener('click', e => {
   };
 
   if (isClickOnMap(mousePos)) {
-    mapItemClicked(mousePos.x - borderSize, mousePos.y - headerSize);
+    const mapMousePositions = getMapClickPosition(mousePos);
+    mapItemClicked(mapMousePositions.x, mapMousePositions.y);
+  }
+});
+
+canvas.addEventListener('contextmenu', e => {
+  e.preventDefault();
+  const mousePos = {
+    x: e.clientX - canvasRect.left,
+    y: e.clientY - canvasRect.top,
+  };
+
+  if (isClickOnMap(mousePos)) {
+    const mapMousePositions = getMapClickPosition(mousePos);
+    mapItemClickedRight(mapMousePositions.x, mapMousePositions.y);
   }
 });
 
@@ -74,6 +93,11 @@ const updateMapItem = (x: number, y: number) => {
   const mapXPosition = borderSize + x * sectionSize;
   const mapYPosition = headerSize + y * sectionSize;
   let imageToPrint = uncheckedSectionImage;
+
+  if (item.state !== SectionStates.NORMAL) {
+    imageToPrint =
+      item.state === SectionStates.FLAG ? flagImage : questionMarkImage;
+  }
 
   if (item.clicked) {
     if (item.mine) {
@@ -125,13 +149,35 @@ const printTimerCounter = () => {
 };
 
 const mapItemClicked = (x: number, y: number) => {
-  const mapPosX = Math.floor(x / sectionSize);
-  const mapPosY = Math.floor(y / sectionSize);
+  const mapPosX = getMapPosition(x);
+  const mapPosY = getMapPosition(y);
   const item = map[mapPosY][mapPosX];
+
+  //If the item is marked or already clicked, nothing else is executed
+  if (item.state === SectionStates.FLAG || item.clicked) {
+    return;
+  }
 
   item.clicked = true;
   item.mine && lostGame();
 
+  updateMapItem(mapPosX, mapPosY);
+};
+
+const mapItemClickedRight = (x: number, y: number) => {
+  const mapPosX = getMapPosition(x);
+  const mapPosY = getMapPosition(y);
+  const item = map[mapPosY][mapPosX];
+
+  //If the item is already clicked, nothing else is executed
+  if (item.clicked) {
+    return;
+  }
+
+  item.state =
+    item.state === SectionStates.POSSIBLE
+      ? SectionStates.NORMAL
+      : ((item.state + 1) as 0 | 1 | 2);
   updateMapItem(mapPosX, mapPosY);
 };
 
