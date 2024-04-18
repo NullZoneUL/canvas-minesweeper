@@ -29,6 +29,8 @@ let map: MapSectionInterface[][] = [];
 let minesLeft: number;
 let timer: number;
 let canvasRect: DOMRect;
+let timerInterval: number;
+let gameStarted = false;
 
 canvas.addEventListener('click', e => {
   const mousePos = {
@@ -149,6 +151,7 @@ const printTimerCounter = () => {
 };
 
 const mapItemClicked = (x: number, y: number) => {
+  !gameStarted && startGame();
   const mapPosX = getMapPosition(x);
   const mapPosY = getMapPosition(y);
   const item = map[mapPosY][mapPosX];
@@ -184,13 +187,25 @@ const mapItemClickedRight = (x: number, y: number) => {
 const lostGame = () => {
   //TODO!! Add behavior here
   console.log('You lose!!!');
+  gameStarted = false;
+  clearInterval(timerInterval);
+};
+
+const startGame = () => {
+  gameStarted = true;
+  timerInterval = setInterval(() => {
+    timer++;
+    printTimerCounter();
+  }, 1000);
 };
 
 const loadGame = (difficulty: number) => {
+  clearInterval(timerInterval);
   setSizeByDifficulty(difficulty);
   minesLeft = minesByDifficulty[difficulty];
   timer = 0;
   map = createMap(difficulty);
+  gameStarted = false;
 
   printMineCounter();
   printTimerCounter();
