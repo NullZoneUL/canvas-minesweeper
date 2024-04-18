@@ -6,6 +6,14 @@ export const detonatedMineImage = document.getElementById(
   'detonatedMineImage',
 ) as HTMLImageElement;
 
+export const flagImage = document.getElementById(
+  'flagImage',
+) as HTMLImageElement;
+
+export const questionMarkImage = document.getElementById(
+  'questionMarkImage',
+) as HTMLImageElement;
+
 export const mapImageNumbers = [
   document.getElementById('emptySectionImage') as HTMLImageElement,
   document.getElementById('oneMapImage') as HTMLImageElement,
