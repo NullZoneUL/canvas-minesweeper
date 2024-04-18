@@ -3,6 +3,7 @@ import checkNumberLimits from './utils/checkNumberLimits';
 import getNumberByDigits from './utils/getNumberByDigits';
 import getMapPosition from './utils/getMapPosition';
 import getMapClickPosition from './utils/getMapClickPosition';
+import getBoundaries from './utils/getBoundaries';
 import {
   sectionSize,
   borderSize,
@@ -26,11 +27,13 @@ const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
 let map: MapSectionInterface[][] = [];
+let emptyBoundaries: { x: number; y: number }[] = [];
 let minesLeft: number;
 let timer: number;
 let canvasRect: DOMRect;
 let timerInterval: number;
 let gameStarted = false;
+let difficulty = 0;
 
 canvas.addEventListener('click', e => {
   const mousePos = {
@@ -63,7 +66,7 @@ const isClickOnMap = (mousePos: { x: number; y: number }) =>
   mousePos.x > borderSize &&
   mousePos.x < canvas.width - borderSize;
 
-const setSizeByDifficulty = (difficulty: number) => {
+const setSizeByDifficulty = () => {
   const sizes = difficultySizes[difficulty];
   if (!sizes) {
     return;
@@ -162,9 +165,32 @@ const mapItemClicked = (x: number, y: number) => {
   }
 
   item.clicked = true;
-  item.mine && lostGame();
+  item.mine ? lostGame() : checkNeedToShowBoundaries(mapPosX, mapPosY);
 
   updateMapItem(mapPosX, mapPosY);
+};
+
+const checkNeedToShowBoundaries = (x: number, y: number) => {
+  const item = map[y][x];
+  if (item.nearbyMines > 0) {
+    return;
+  }
+
+  //If selected item hasn't been used for displaying new boundaries...
+  if (!emptyBoundaries.find(e => e.x === x && e.y === y)) {
+    emptyBoundaries.push({ x, y });
+    return getBoundaries(x, y, difficultySizes[difficulty], showBoundaries);
+  }
+};
+
+const showBoundaries = (x: number, y: number) => {
+  const boundaryItem = map[y][x];
+  if (boundaryItem.state === SectionStates.NORMAL) {
+    boundaryItem.clicked = true;
+    updateMapItem(x, y);
+  }
+
+  checkNeedToShowBoundaries(x, y);
 };
 
 const mapItemClickedRight = (x: number, y: number) => {
@@ -204,13 +230,14 @@ const startGame = () => {
   }, 1000);
 };
 
-const loadGame = (difficulty: number) => {
+const loadGame = () => {
   clearInterval(timerInterval);
-  setSizeByDifficulty(difficulty);
+  setSizeByDifficulty();
   minesLeft = minesByDifficulty[difficulty];
   timer = 0;
   map = createMap(difficulty);
   gameStarted = false;
+  emptyBoundaries = [];
 
   printMineCounter();
   printTimerCounter();
@@ -221,6 +248,6 @@ const displayHideButton = () => {
   console.log('Button clicked!!');
 };
 
-loadGame(0);
+loadGame();
 
 export { displayHideButton };
