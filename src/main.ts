@@ -181,7 +181,12 @@ const mapItemClickedRight = (x: number, y: number) => {
     item.state === SectionStates.POSSIBLE
       ? SectionStates.NORMAL
       : ((item.state + 1) as 0 | 1 | 2);
+
+  item.state === SectionStates.FLAG
+    ? minesLeft--
+    : item.state === SectionStates.POSSIBLE && minesLeft++;
   updateMapItem(mapPosX, mapPosY);
+  printMineCounter();
 };
 
 const lostGame = () => {
