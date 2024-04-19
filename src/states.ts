@@ -3,3 +3,9 @@ export enum SectionStates {
   'FLAG',
   'POSSIBLE',
 }
+
+export enum GameStates {
+  'LOADED',
+  'STARTED',
+  'ENDED',
+}

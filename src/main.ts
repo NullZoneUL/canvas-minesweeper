@@ -19,7 +19,7 @@ import {
   flagImage,
   questionMarkImage,
 } from './images';
-import { SectionStates } from './sectionStates';
+import { SectionStates, GameStates } from './states';
 import { difficultySizes, minesByDifficulty } from './utils/difficulty';
 import './style.css';
 
@@ -33,8 +33,7 @@ let sectionsLeft: number;
 let timer: number;
 let canvasRect: DOMRect;
 let timerInterval: number;
-let gameStarted = false;
-let gameEnded = false;
+let gameStatus: 0 | 1 | 2;
 let difficulty = 0;
 
 canvas.addEventListener('click', e => {
@@ -159,10 +158,10 @@ const printTimerCounter = () => {
 };
 
 const mapItemClicked = (x: number, y: number) => {
-  if (gameEnded) {
+  if (gameStatus === GameStates.ENDED) {
     return;
   }
-  !gameStarted && startGame();
+  gameStatus === GameStates.LOADED && startGame();
   const mapPosX = getMapPosition(x);
   const mapPosY = getMapPosition(y);
   const item = map[mapPosY][mapPosX];
@@ -209,7 +208,7 @@ const showBoundaries = (x: number, y: number) => {
 };
 
 const mapItemClickedRight = (x: number, y: number) => {
-  if (gameEnded) {
+  if (gameStatus === GameStates.ENDED) {
     return;
   }
   const mapPosX = getMapPosition(x);
@@ -240,18 +239,18 @@ const lostGame = () => {
 };
 
 const win = () => {
+  //TODO!! Add behavior here
   alert('You win!!');
   onGameEnded();
 };
 
 const onGameEnded = () => {
-  gameStarted = false;
-  gameEnded = true;
+  gameStatus = GameStates.ENDED;
   clearInterval(timerInterval);
 };
 
 const startGame = () => {
-  gameStarted = true;
+  gameStatus = GameStates.STARTED;
   timerInterval = setInterval(() => {
     timer++;
     printTimerCounter();
@@ -263,8 +262,7 @@ const loadGame = () => {
   setSizeByDifficulty();
   timer = 0;
   map = createMap(difficulty);
-  gameStarted = false;
-  gameEnded = false;
+  gameStatus = GameStates.LOADED;
   emptyBoundaries = [];
 
   printMineCounter();
