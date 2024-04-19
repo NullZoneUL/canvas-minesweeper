@@ -29,10 +29,12 @@ const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 let map: MapSectionInterface[][] = [];
 let emptyBoundaries: { x: number; y: number }[] = [];
 let minesLeft: number;
+let sectionsLeft: number;
 let timer: number;
 let canvasRect: DOMRect;
 let timerInterval: number;
 let gameStarted = false;
+let gameEnded = false;
 let difficulty = 0;
 
 canvas.addEventListener('click', e => {
@@ -68,6 +70,9 @@ const isClickOnMap = (mousePos: { x: number; y: number }) =>
 
 const setSizeByDifficulty = () => {
   const sizes = difficultySizes[difficulty];
+  minesLeft = minesByDifficulty[difficulty];
+  sectionsLeft = sizes[0] * sizes[1] - minesLeft;
+
   if (!sizes) {
     return;
   }
@@ -154,6 +159,9 @@ const printTimerCounter = () => {
 };
 
 const mapItemClicked = (x: number, y: number) => {
+  if (gameEnded) {
+    return;
+  }
   !gameStarted && startGame();
   const mapPosX = getMapPosition(x);
   const mapPosY = getMapPosition(y);
@@ -165,9 +173,15 @@ const mapItemClicked = (x: number, y: number) => {
   }
 
   item.clicked = true;
-  item.mine ? lostGame() : checkNeedToShowBoundaries(mapPosX, mapPosY);
+  if (item.mine) {
+    lostGame();
+    return updateMapItem(mapPosX, mapPosY);
+  }
 
+  checkNeedToShowBoundaries(mapPosX, mapPosY);
   updateMapItem(mapPosX, mapPosY);
+  sectionsLeft--;
+  sectionsLeft === 0 && win();
 };
 
 const checkNeedToShowBoundaries = (x: number, y: number) => {
@@ -186,6 +200,7 @@ const checkNeedToShowBoundaries = (x: number, y: number) => {
 const showBoundaries = (x: number, y: number) => {
   const boundaryItem = map[y][x];
   if (boundaryItem.state === SectionStates.NORMAL) {
+    !boundaryItem.clicked && sectionsLeft--;
     boundaryItem.clicked = true;
     updateMapItem(x, y);
   }
@@ -194,6 +209,9 @@ const showBoundaries = (x: number, y: number) => {
 };
 
 const mapItemClickedRight = (x: number, y: number) => {
+  if (gameEnded) {
+    return;
+  }
   const mapPosX = getMapPosition(x);
   const mapPosY = getMapPosition(y);
   const item = map[mapPosY][mapPosX];
@@ -218,7 +236,17 @@ const mapItemClickedRight = (x: number, y: number) => {
 const lostGame = () => {
   //TODO!! Add behavior here
   console.log('You lose!!!');
+  onGameEnded();
+};
+
+const win = () => {
+  alert('You win!!');
+  onGameEnded();
+};
+
+const onGameEnded = () => {
   gameStarted = false;
+  gameEnded = true;
   clearInterval(timerInterval);
 };
 
@@ -233,10 +261,10 @@ const startGame = () => {
 const loadGame = () => {
   clearInterval(timerInterval);
   setSizeByDifficulty();
-  minesLeft = minesByDifficulty[difficulty];
   timer = 0;
   map = createMap(difficulty);
   gameStarted = false;
+  gameEnded = false;
   emptyBoundaries = [];
 
   printMineCounter();
