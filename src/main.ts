@@ -21,7 +21,6 @@ import {
 } from './images';
 import { SectionStates, GameStates } from './states';
 import { difficultySizes, minesByDifficulty } from './utils/difficulty';
-import './style.css';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
