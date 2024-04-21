@@ -2,8 +2,16 @@ export const uncheckedSectionImage = document.getElementById(
   'uncheckedSectionImage',
 ) as HTMLImageElement;
 
+export const mineImage = document.getElementById(
+  'mineImage',
+) as HTMLImageElement;
+
 export const detonatedMineImage = document.getElementById(
   'detonatedMineImage',
+) as HTMLImageElement;
+
+export const noMineImage = document.getElementById(
+  'noMineImage',
 ) as HTMLImageElement;
 
 export const flagImage = document.getElementById(
