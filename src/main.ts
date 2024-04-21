@@ -18,6 +18,8 @@ import {
   detonatedMineImage,
   flagImage,
   questionMarkImage,
+  mineImage,
+  noMineImage,
 } from './images';
 import { SectionStates, GameStates } from './states';
 import { difficultySizes, minesByDifficulty } from './utils/difficulty';
@@ -82,21 +84,29 @@ const setSizeByDifficulty = () => {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 };
 
-const printMap = () => {
+const printMap = (displayMines = false) => {
   let x = borderSize;
   let y = headerSize;
+  let positionX = 0;
+  let positionY = 0;
   map.forEach(row => {
-    row.forEach(section => {
-      //TODO!! Change image by the section state
-      ctx.drawImage(uncheckedSectionImage, x, y, sectionSize, sectionSize);
+    row.forEach(() => {
+      if (!displayMines) {
+        ctx.drawImage(uncheckedSectionImage, x, y, sectionSize, sectionSize);
+      } else {
+        updateMapItem(positionX, positionY, true);
+      }
       x += sectionSize;
+      positionX++;
     });
     y += sectionSize;
     x = borderSize;
+    positionY++;
+    positionX = 0;
   });
 };
 
-const updateMapItem = (x: number, y: number) => {
+const updateMapItem = (x: number, y: number, displayMines = false) => {
   const item = map[y][x];
   const mapXPosition = borderSize + x * sectionSize;
   const mapYPosition = headerSize + y * sectionSize;
@@ -112,6 +122,14 @@ const updateMapItem = (x: number, y: number) => {
       imageToPrint = detonatedMineImage;
     } else {
       imageToPrint = mapImageNumbers[item.nearbyMines];
+    }
+  }
+
+  if (displayMines) {
+    if (item.mine && !item.clicked && item.state !== SectionStates.FLAG) {
+      imageToPrint = mineImage;
+    } else if (!item.mine && item.state === SectionStates.FLAG) {
+      imageToPrint = noMineImage;
     }
   }
 
@@ -189,17 +207,28 @@ const mapItemClicked = (x: number, y: number) => {
 const showNonEmptyBoundaries = (x: number, y: number) => {
   const nearbyItems: { x: number; y: number }[] = [];
   let mines = 0;
+  let flags = 0;
   getBoundaries(x, y, difficultySizes[difficulty], (x_: number, y_: number) => {
     const newItem = map[y_][x_];
-    newItem.mine && newItem.state === SectionStates.FLAG && mines++;
-    !newItem.mine && newItem.state === SectionStates.FLAG && mines--;
+    if (newItem.state === SectionStates.FLAG) {
+      newItem.mine && mines++;
+      !newItem.mine && mines--;
+      flags++;
+    }
     nearbyItems.push({ x: x_, y: y_ });
   });
 
-  map[y][x].nearbyMines === mines &&
+  if (map[y][x].nearbyMines === mines) {
     nearbyItems.forEach(position => {
       displayItem(position.x, position.y);
     });
+    return;
+  }
+
+  if (flags === map[y][x].nearbyMines) {
+    printMap(true);
+    lostGame();
+  }
 };
 
 const checkNeedToShowBoundaries = (x: number, y: number) => {
