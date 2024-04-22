@@ -35,7 +35,7 @@ let timer: number;
 let canvasRect: DOMRect;
 let timerInterval: number;
 let gameStatus: 0 | 1 | 2;
-let difficulty = 0;
+let difficulty: number;
 
 /****  Click event listeners  ****/
 
@@ -321,7 +321,8 @@ const startGame = () => {
   }, 1000);
 };
 
-const loadGame = () => {
+const loadGame = (gameDifficulty: number) => {
+  difficulty = gameDifficulty;
   clearInterval(timerInterval);
   setSizeByDifficulty();
   timer = 0;
@@ -337,5 +338,7 @@ const loadGame = () => {
 /********************************/
 
 window.addEventListener('load', () => {
-  loadGame();
+  loadGame(0);
 });
+
+export { loadGame };

@@ -27,3 +27,7 @@ Build destination: ./dist
 <br>
 **-> pnpm run build**
 <br>
+<br>
+## **--- Run tests ---**
+<br>
+**-> pnpm test**
