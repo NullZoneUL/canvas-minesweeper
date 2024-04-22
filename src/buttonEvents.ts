@@ -1,5 +1,3 @@
-import { displayHideButton } from './main';
-
 document
   .getElementById('options')
-  ?.addEventListener('click', displayHideButton);
+  ?.addEventListener('click', () => console.log('TODO!!'));
