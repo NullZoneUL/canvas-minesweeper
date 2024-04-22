@@ -196,8 +196,7 @@ const mapItemClicked = (x: number, y: number) => {
 
   if (item.mine) {
     item.clicked = true;
-    lostGame();
-    return updateMapItem(mapPosX, mapPosY);
+    return lostGame();
   }
 
   displayItem(mapPosX, mapPosY);
@@ -225,10 +224,7 @@ const showNonEmptyBoundaries = (x: number, y: number) => {
     return;
   }
 
-  if (flags === map[y][x].nearbyMines) {
-    printMap(true);
-    lostGame();
-  }
+  flags === map[y][x].nearbyMines && lostGame();
 };
 
 const checkNeedToShowBoundaries = (x: number, y: number) => {
@@ -282,6 +278,7 @@ const mapItemClickedRight = (x: number, y: number) => {
 const lostGame = () => {
   //TODO!! Add behavior here
   console.log('You lose!!!');
+  printMap(true);
   onGameEnded();
 };
 
