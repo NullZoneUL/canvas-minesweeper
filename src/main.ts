@@ -322,6 +322,8 @@ const displayHideButton = () => {
   console.log('Button clicked!!');
 };
 
-loadGame();
+window.addEventListener('load', () => {
+  loadGame();
+});
 
 export { displayHideButton };
