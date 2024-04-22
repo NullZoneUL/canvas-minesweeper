@@ -37,6 +37,8 @@ let timerInterval: number;
 let gameStatus: 0 | 1 | 2;
 let difficulty = 0;
 
+/****  Click event listeners  ****/
+
 canvas.addEventListener('click', e => {
   const mousePos = {
     x: e.clientX - canvasRect.left,
@@ -67,6 +69,68 @@ const isClickOnMap = (mousePos: { x: number; y: number }) =>
   mousePos.y < canvas.height - borderSize &&
   mousePos.x > borderSize &&
   mousePos.x < canvas.width - borderSize;
+
+/********************************/
+
+/****  Click functions  ****/
+
+const mapItemClicked = (x: number, y: number) => {
+  if (gameStatus === GameStates.ENDED) {
+    return;
+  }
+  gameStatus === GameStates.LOADED && startGame();
+  const mapPosX = getMapPosition(x);
+  const mapPosY = getMapPosition(y);
+  const item = map[mapPosY][mapPosX];
+
+  //If the item is marked or already clicked, nothing else is executed
+  if (item.state === SectionStates.FLAG) {
+    return;
+  }
+
+  if (item.clicked) {
+    item.nearbyMines > 0 && showNonEmptyBoundaries(mapPosX, mapPosY);
+    checkWin();
+    return;
+  }
+
+  if (item.mine) {
+    item.clicked = true;
+    return lostGame();
+  }
+
+  displayItem(mapPosX, mapPosY);
+  checkWin();
+};
+
+const mapItemClickedRight = (x: number, y: number) => {
+  if (gameStatus === GameStates.ENDED) {
+    return;
+  }
+  const mapPosX = getMapPosition(x);
+  const mapPosY = getMapPosition(y);
+  const item = map[mapPosY][mapPosX];
+
+  //If the item is already clicked, nothing else is executed
+  if (item.clicked) {
+    return;
+  }
+
+  item.state =
+    item.state === SectionStates.POSSIBLE
+      ? SectionStates.NORMAL
+      : ((item.state + 1) as 0 | 1 | 2);
+
+  item.state === SectionStates.FLAG
+    ? minesLeft--
+    : item.state === SectionStates.POSSIBLE && minesLeft++;
+  updateMapItem(mapPosX, mapPosY);
+  printMineCounter();
+};
+
+/***************************/
+
+/****  Print functions  ****/
 
 const setSizeByDifficulty = () => {
   const sizes = difficultySizes[difficulty];
@@ -174,34 +238,9 @@ const printTimerCounter = () => {
   });
 };
 
-const mapItemClicked = (x: number, y: number) => {
-  if (gameStatus === GameStates.ENDED) {
-    return;
-  }
-  gameStatus === GameStates.LOADED && startGame();
-  const mapPosX = getMapPosition(x);
-  const mapPosY = getMapPosition(y);
-  const item = map[mapPosY][mapPosX];
+/***************************/
 
-  //If the item is marked or already clicked, nothing else is executed
-  if (item.state === SectionStates.FLAG) {
-    return;
-  }
-
-  if (item.clicked) {
-    item.nearbyMines > 0 && showNonEmptyBoundaries(mapPosX, mapPosY);
-    checkWin();
-    return;
-  }
-
-  if (item.mine) {
-    item.clicked = true;
-    return lostGame();
-  }
-
-  displayItem(mapPosX, mapPosY);
-  checkWin();
-};
+/****  Map behavior functions  ****/
 
 const showNonEmptyBoundaries = (x: number, y: number) => {
   const nearbyItems: { x: number; y: number }[] = [];
@@ -250,33 +289,11 @@ const displayItem = (x: number, y: number) => {
   checkNeedToShowBoundaries(x, y);
 };
 
-const mapItemClickedRight = (x: number, y: number) => {
-  if (gameStatus === GameStates.ENDED) {
-    return;
-  }
-  const mapPosX = getMapPosition(x);
-  const mapPosY = getMapPosition(y);
-  const item = map[mapPosY][mapPosX];
+/**********************************/
 
-  //If the item is already clicked, nothing else is executed
-  if (item.clicked) {
-    return;
-  }
-
-  item.state =
-    item.state === SectionStates.POSSIBLE
-      ? SectionStates.NORMAL
-      : ((item.state + 1) as 0 | 1 | 2);
-
-  item.state === SectionStates.FLAG
-    ? minesLeft--
-    : item.state === SectionStates.POSSIBLE && minesLeft++;
-  updateMapItem(mapPosX, mapPosY);
-  printMineCounter();
-};
+/****  Game state functions  ****/
 
 const lostGame = () => {
-  //TODO!! Add behavior here
   console.log('You lose!!!');
   printMap(true);
   onGameEnded();
@@ -287,7 +304,6 @@ const checkWin = () => {
 };
 
 const win = () => {
-  //TODO!! Add behavior here
   alert('You win!!');
   onGameEnded();
 };
@@ -318,12 +334,8 @@ const loadGame = () => {
   printMap();
 };
 
-const displayHideButton = () => {
-  console.log('Button clicked!!');
-};
+/********************************/
 
 window.addEventListener('load', () => {
   loadGame();
 });
-
-export { displayHideButton };
