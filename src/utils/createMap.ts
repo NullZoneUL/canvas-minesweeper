@@ -1,9 +1,13 @@
 import getRandomNumber from './getRandomNumber';
 import getBoundaries from './getBoundaries';
-import { difficultySizes, minesByDifficulty } from './difficulty';
+import {
+  getMapSizeByDifficulty,
+  getNumberOfMinesByDifficulty,
+} from './difficulty';
 
 const createMap = (difficulty: number) => {
-  const mapSize = difficultySizes[difficulty];
+  const mapSize = getMapSizeByDifficulty(difficulty);
+  const numberOfMines = getNumberOfMinesByDifficulty(difficulty);
   const map: MapSectionInterface[][] = [];
 
   for (let i = 0; i < mapSize[1]; i++) {
@@ -13,7 +17,7 @@ const createMap = (difficulty: number) => {
     }
   }
 
-  [...Array(minesByDifficulty[difficulty])].forEach(() => {
+  [...Array(numberOfMines)].forEach(() => {
     const maxY = mapSize[1] - 1;
     const maxX = mapSize[0] - 1;
     let y = getRandomNumber(0, maxY);

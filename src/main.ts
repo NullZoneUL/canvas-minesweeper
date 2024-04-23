@@ -22,7 +22,10 @@ import {
   noMineImage,
 } from './images';
 import { SectionStates, GameStates } from './states';
-import { difficultySizes, minesByDifficulty } from './utils/difficulty';
+import {
+  getMapSizeByDifficulty,
+  getNumberOfMinesByDifficulty,
+} from './utils/difficulty';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -133,16 +136,16 @@ const mapItemClickedRight = (x: number, y: number) => {
 /****  Print functions  ****/
 
 const setSizeByDifficulty = () => {
-  const sizes = difficultySizes[difficulty];
-  minesLeft = minesByDifficulty[difficulty];
-  sectionsLeft = sizes[0] * sizes[1] - minesLeft;
+  const mapSize = getMapSizeByDifficulty(difficulty);
+  minesLeft = getNumberOfMinesByDifficulty(difficulty);
+  sectionsLeft = mapSize[0] * mapSize[1] - minesLeft;
 
-  if (!sizes) {
+  if (!mapSize) {
     return;
   }
 
-  canvas.width = sizes[0] * sectionSize + borderSize * 2;
-  canvas.height = sizes[1] * sectionSize + headerSize + borderSize;
+  canvas.width = mapSize[0] * sectionSize + borderSize * 2;
+  canvas.height = mapSize[1] * sectionSize + headerSize + borderSize;
   canvasRect = canvas.getBoundingClientRect();
   ctx.fillStyle = '#bdbdbd';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -244,9 +247,10 @@ const printTimerCounter = () => {
 
 const showNonEmptyBoundaries = (x: number, y: number) => {
   const nearbyItems: { x: number; y: number }[] = [];
+  const mapSize = getMapSizeByDifficulty(difficulty);
   let mines = 0;
   let flags = 0;
-  getBoundaries(x, y, difficultySizes[difficulty], (x_: number, y_: number) => {
+  getBoundaries(x, y, mapSize, (x_: number, y_: number) => {
     const newItem = map[y_][x_];
     if (newItem.state === SectionStates.FLAG) {
       newItem.mine && mines++;
@@ -272,10 +276,11 @@ const checkNeedToShowBoundaries = (x: number, y: number) => {
     return;
   }
 
+  const mapSize = getMapSizeByDifficulty(difficulty);
   //If selected item hasn't been used for displaying new boundaries...
   if (!emptyBoundaries.find(e => e.x === x && e.y === y)) {
     emptyBoundaries.push({ x, y });
-    return getBoundaries(x, y, difficultySizes[difficulty], displayItem);
+    return getBoundaries(x, y, mapSize, displayItem);
   }
 };
 
