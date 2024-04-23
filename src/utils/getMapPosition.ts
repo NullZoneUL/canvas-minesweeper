@@ -1,4 +1,4 @@
-import { sectionSize } from '../sizes';
+import { sectionSize } from '@/sizes';
 
 const getMapPosition = (position: number) => Math.floor(position / sectionSize);
 

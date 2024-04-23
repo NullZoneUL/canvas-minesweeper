@@ -1,4 +1,4 @@
-# The old minesweeper made with <canvas>
+# The old minesweeper made with canvas
 
 ** ***Important! [Node](https://nodejs.org/en/download) and [pnpm](https://pnpm.io/installation) must be installed to run this project.*** **
 <br>
