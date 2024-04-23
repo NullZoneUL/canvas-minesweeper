@@ -1,6 +1,8 @@
+import literals from '../assets/strings/literals.json';
+
 const getRandomNumber = (min: number, max: number): number => {
   if (min > max) {
-    console.error('Max value has to be bigger than min value');
+    console.error(literals.error_messages.min_value_greater_than_max);
     return NaN;
   }
 
