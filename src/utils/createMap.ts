@@ -1,3 +1,4 @@
+import { SectionStates } from '@/states';
 import getRandomNumber from './getRandomNumber';
 import getBoundaries from './getBoundaries';
 import {
@@ -13,7 +14,12 @@ const createMap = (difficulty: number) => {
   for (let i = 0; i < mapSize[1]; i++) {
     map.push([]);
     for (let x = 0; x < mapSize[0]; x++) {
-      map[i].push({ mine: false, state: 0, clicked: false, nearbyMines: 0 });
+      map[i].push({
+        mine: false,
+        state: SectionStates.NORMAL,
+        clicked: false,
+        nearbyMines: 0,
+      });
     }
   }
 

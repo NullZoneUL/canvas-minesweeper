@@ -141,6 +141,7 @@ const setSizeByDifficulty = () => {
   sectionsLeft = mapSize[0] * mapSize[1] - minesLeft;
 
   if (!mapSize) {
+    //TODO!! Add error message
     return;
   }
 
