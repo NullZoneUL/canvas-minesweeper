@@ -1,4 +1,4 @@
-import literals from '../assets/strings/literals.json';
+import literals from '@literals';
 
 const difficultySizes = [
   [8, 8],
