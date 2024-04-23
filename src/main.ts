@@ -1,9 +1,13 @@
-import createMap from './utils/createMap';
-import checkNumberLimits from './utils/checkNumberLimits';
-import getNumberByDigits from './utils/getNumberByDigits';
-import getMapPosition from './utils/getMapPosition';
-import getMapClickPosition from './utils/getMapClickPosition';
-import getBoundaries from './utils/getBoundaries';
+import createMap from '@utils/createMap';
+import checkNumberLimits from '@utils/checkNumberLimits';
+import getNumberByDigits from '@utils/getNumberByDigits';
+import getMapPosition from '@utils/getMapPosition';
+import getMapClickPosition from '@utils/getMapClickPosition';
+import getBoundaries from '@utils/getBoundaries';
+import {
+  getMapSizeByDifficulty,
+  getNumberOfMinesByDifficulty,
+} from '@utils/difficulty';
 import {
   sectionSize,
   borderSize,
@@ -22,10 +26,6 @@ import {
   noMineImage,
 } from './images';
 import { SectionStates, GameStates } from './states';
-import {
-  getMapSizeByDifficulty,
-  getNumberOfMinesByDifficulty,
-} from './utils/difficulty';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;

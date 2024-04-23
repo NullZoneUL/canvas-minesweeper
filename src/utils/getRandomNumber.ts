@@ -1,4 +1,4 @@
-import literals from '../assets/strings/literals.json';
+import literals from '@literals';
 
 const getRandomNumber = (min: number, max: number): number => {
   if (min > max) {

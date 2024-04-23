@@ -1,4 +1,4 @@
-import { borderSize, headerSize } from '../sizes';
+import { borderSize, headerSize } from '@/sizes';
 
 const getMapClickPosition = (mousePos: { x: number; y: number }) => {
   return {

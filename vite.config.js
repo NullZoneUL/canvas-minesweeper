@@ -1,4 +1,5 @@
 import autoprefixer from 'autoprefixer';
+import path from 'path';
 
 export default {
   server: {
@@ -8,6 +9,17 @@ export default {
   css: {
     postcss: {
       plugins: [autoprefixer],
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@assets': path.resolve(__dirname, './src/assets'),
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@literals': path.resolve(
+        __dirname,
+        './src/assets/strings/literals.json',
+      ),
     },
   },
 };
