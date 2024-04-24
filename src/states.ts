@@ -9,3 +9,10 @@ export enum GameStates {
   'STARTED',
   'ENDED',
 }
+
+export enum ResetButtonStates {
+  'NORMAL',
+  'CLICK',
+  'WIN',
+  'DEAD',
+}

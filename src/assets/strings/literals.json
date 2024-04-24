@@ -2,6 +2,7 @@
   "error_messages": {
     "difficulty_less_than_0": "The difficulty level is lower than 0. The difficulty level will be set to 0",
     "difficulty_nonexistent": "The selected difficulty level doesn't exist. The max difficulty level will be set",
-    "min_value_greater_than_max": "Max value has to be bigger than min value"
+    "min_value_greater_than_max": "Max value has to be bigger than min value",
+    "undefined_face_image": "The selected reset button image doesn't exist"
   }
 }

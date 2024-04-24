@@ -4,6 +4,7 @@ import getNumberByDigits from '@utils/getNumberByDigits';
 import getMapPosition from '@utils/getMapPosition';
 import getMapClickPosition from '@utils/getMapClickPosition';
 import getBoundaries from '@utils/getBoundaries';
+import literals from '@literals';
 import {
   getMapSizeByDifficulty,
   getNumberOfMinesByDifficulty,
@@ -14,6 +15,7 @@ import {
   headerSize,
   counterHeight,
   counterWidth,
+  resetButtonSize,
 } from './sizes';
 import {
   uncheckedSectionImage,
@@ -24,8 +26,9 @@ import {
   questionMarkImage,
   mineImage,
   noMineImage,
+  resetButtonImages,
 } from './images';
-import { SectionStates, GameStates } from './states';
+import { SectionStates, GameStates, ResetButtonStates } from './states';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -39,6 +42,7 @@ let canvasRect: DOMRect;
 let timerInterval: number;
 let gameStatus: 0 | 1 | 2;
 let difficulty: number;
+let resetButtonPosition: number[];
 
 /****  Click event listeners  ****/
 
@@ -52,6 +56,8 @@ canvas.addEventListener('click', e => {
     const mapMousePositions = getMapClickPosition(mousePos);
     mapItemClicked(mapMousePositions.x, mapMousePositions.y);
   }
+
+  isClickOnResetButton(mousePos) && loadGame(difficulty || 0);
 });
 
 canvas.addEventListener('contextmenu', e => {
@@ -67,11 +73,31 @@ canvas.addEventListener('contextmenu', e => {
   }
 });
 
+canvas.addEventListener('mousedown', e => {
+  const mousePos = {
+    x: e.clientX - canvasRect.left,
+    y: e.clientY - canvasRect.top,
+  };
+
+  //If the mouse button used is not left or if the game status is ENDED, do nothing
+  if (e.button !== 0 || gameStatus === GameStates.ENDED) {
+    return;
+  }
+
+  isClickOnMap(mousePos) && printResetButton(ResetButtonStates.CLICK);
+});
+
 const isClickOnMap = (mousePos: { x: number; y: number }) =>
   mousePos.y > headerSize &&
   mousePos.y < canvas.height - borderSize &&
   mousePos.x > borderSize &&
   mousePos.x < canvas.width - borderSize;
+
+const isClickOnResetButton = (mousePos: { x: number; y: number }) =>
+  mousePos.y > resetButtonPosition[1] &&
+  mousePos.y < resetButtonPosition[1] + resetButtonSize &&
+  mousePos.x > resetButtonPosition[0] &&
+  mousePos.x < resetButtonPosition[0] + resetButtonSize;
 
 /********************************/
 
@@ -92,6 +118,7 @@ const mapItemClicked = (x: number, y: number) => {
   }
 
   if (item.clicked) {
+    printResetButton(ResetButtonStates.NORMAL);
     item.nearbyMines > 0 && showNonEmptyBoundaries(mapPosX, mapPosY);
     checkWin();
     return;
@@ -102,6 +129,7 @@ const mapItemClicked = (x: number, y: number) => {
     return lostGame();
   }
 
+  printResetButton(ResetButtonStates.NORMAL);
   displayItem(mapPosX, mapPosY);
   checkWin();
 };
@@ -242,6 +270,27 @@ const printTimerCounter = () => {
   });
 };
 
+const printResetButton = (mode: number) => {
+  let imageToPrint = resetButtonImages[mode];
+
+  if (!imageToPrint) {
+    console.error(literals.error_messages.undefined_face_image);
+    imageToPrint = resetButtonImages[ResetButtonStates.NORMAL];
+  }
+
+  ctx.drawImage(
+    imageToPrint,
+    resetButtonPosition[0],
+    resetButtonPosition[1],
+    resetButtonSize,
+    resetButtonSize,
+  );
+};
+
+const setResetButtonPosition = () => {
+  resetButtonPosition = [canvas.width / 2 - resetButtonSize / 2, borderSize];
+};
+
 /***************************/
 
 /****  Map behavior functions  ****/
@@ -301,6 +350,7 @@ const displayItem = (x: number, y: number) => {
 
 const lostGame = () => {
   console.log('You lose!!!');
+  printResetButton(ResetButtonStates.DEAD);
   printMap(true);
   onGameEnded();
 };
@@ -310,7 +360,8 @@ const checkWin = () => {
 };
 
 const win = () => {
-  alert('You win!!');
+  console.log('You win!!');
+  printResetButton(ResetButtonStates.WIN);
   onGameEnded();
 };
 
@@ -331,6 +382,7 @@ const loadGame = (gameDifficulty: number) => {
   difficulty = gameDifficulty;
   clearInterval(timerInterval);
   setSizeByDifficulty();
+  setResetButtonPosition();
   timer = 0;
   map = createMap(difficulty);
   gameStatus = GameStates.LOADED;
@@ -338,6 +390,7 @@ const loadGame = (gameDifficulty: number) => {
 
   printMineCounter();
   printTimerCounter();
+  printResetButton(ResetButtonStates.NORMAL);
   printMap();
 };
 
