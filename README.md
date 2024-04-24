@@ -29,5 +29,4 @@ Build destination: ./dist
 <br>
 <br>
 ## **--- Run tests ---**
-<br>
 **-> pnpm test**
