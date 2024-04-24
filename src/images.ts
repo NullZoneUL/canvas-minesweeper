@@ -47,3 +47,10 @@ export const counterImageNumbers = [
   document.getElementById('nineImage') as HTMLImageElement,
   document.getElementById('minusImage') as HTMLImageElement,
 ];
+
+export const resetButtonImages = [
+  document.getElementById('faceNormal') as HTMLImageElement,
+  document.getElementById('faceClick') as HTMLImageElement,
+  document.getElementById('faceWin') as HTMLImageElement,
+  document.getElementById('faceDead') as HTMLImageElement,
+];
