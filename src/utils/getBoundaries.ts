@@ -7,7 +7,7 @@ const getBoundaries = (
   for (let y_ = y - 1; y_ < mapSize[1] && y_ <= y + 1; y_++) {
     if (y_ > -1) {
       for (let x_ = x - 1; x_ < mapSize[0] && x_ <= x + 1; x_++) {
-        x_ > -1 && callback(x_, y_);
+        x_ > -1 && !(x === x_ && y === y_) && callback(x_, y_);
       }
     }
   }
