@@ -322,7 +322,7 @@ const showNonEmptyBoundaries = (x: number, y: number) => {
 
 const checkNeedToShowBoundaries = (x: number, y: number) => {
   const item = map[y][x];
-  if (item.nearbyMines > 0) {
+  if (item.nearbyMines > 0 || item.mine) {
     return;
   }
 
