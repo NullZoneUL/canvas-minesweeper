@@ -1,4 +1,12 @@
 {
+  "new_game": "Nuevo juego",
+  "pause": "Pausa",
+  "easy": "Fácil",
+  "normal": "Normal",
+  "hard": "Difícil",
+  "custom": "Personalizado",
+  "ranking": "Clasificación",
+  "close": "Cerrar",
   "error_messages": {
     "difficulty_less_than_0": "The difficulty level is lower than 0. The difficulty level will be set to 0",
     "difficulty_nonexistent": "The selected difficulty level doesn't exist. The max difficulty level will be set",

@@ -399,5 +399,3 @@ const loadGame = (gameDifficulty: number) => {
 window.addEventListener('load', () => {
   loadGame(0);
 });
-
-export { loadGame };

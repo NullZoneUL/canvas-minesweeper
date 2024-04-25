@@ -44,3 +44,26 @@ main {
 .image-sources {
   display: none;
 }
+
+#menu-options {
+  position: absolute;
+  color: black;
+  background-color: #bdbdbd;
+  font-family: sans-serif;
+  border: 1px solid grey;
+}
+
+#menu-options > ul {
+  margin: 0;
+  padding: 0;
+}
+
+#menu-options li {
+  list-style: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#menu-options li:hover {
+  background-color: #979f9e;
+}
