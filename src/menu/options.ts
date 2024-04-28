@@ -1,6 +1,6 @@
 import literals from '@literals';
-import { openCloseMenu } from './menu';
 import { difficulty, loadGame } from '@/main';
+import { openCloseMenu } from './menu';
 
 const loadNewGame = () => {
   loadGame(difficulty);
@@ -19,20 +19,20 @@ export const menuOptions: MenuOptionsInterface[] = [
   /*{
     title: literals.pause,
     action: () => console.log('TODO!!'),
-  },
+  },*/
   {
     title: literals.easy,
-    action: () => console.log('TODO!!'),
+    action: () => menuOnClick(() => loadGame(0)),
   },
   {
     title: literals.normal,
-    action: () => console.log('TODO!!'),
+    action: () => menuOnClick(() => loadGame(1)),
   },
   {
     title: literals.hard,
-    action: () => console.log('TODO!!'),
+    action: () => menuOnClick(() => loadGame(2)),
   },
-  {
+  /*{
     title: literals.custom,
     action: () => console.log('TODO!!'),
   },
