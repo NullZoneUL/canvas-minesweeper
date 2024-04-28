@@ -29,6 +29,7 @@ import {
   resetButtonImages,
 } from './images';
 import { SectionStates, GameStates, ResetButtonStates } from './states';
+import './menu/menu';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -399,3 +400,5 @@ const loadGame = (gameDifficulty: number) => {
 window.addEventListener('load', () => {
   loadGame(0);
 });
+
+export { difficulty, loadGame };

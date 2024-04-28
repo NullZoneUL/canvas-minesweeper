@@ -41,6 +41,10 @@ main {
   list-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .image-sources {
   display: none;
 }

@@ -27,3 +27,5 @@ window.addEventListener('load', () => {
 
   document.getElementById('options')?.addEventListener('click', openCloseMenu);
 });
+
+export { openCloseMenu };

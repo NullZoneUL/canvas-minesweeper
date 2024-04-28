@@ -1,11 +1,22 @@
 import literals from '@literals';
+import { openCloseMenu } from './menu';
+import { difficulty, loadGame } from '@/main';
+
+const loadNewGame = () => {
+  loadGame(difficulty);
+};
+
+const menuOnClick = (callback?: () => void) => {
+  openCloseMenu();
+  callback && callback();
+};
 
 export const menuOptions: MenuOptionsInterface[] = [
   {
     title: literals.new_game,
-    action: () => console.log('TODO!!'),
+    action: () => menuOnClick(loadNewGame),
   },
-  {
+  /*{
     title: literals.pause,
     action: () => console.log('TODO!!'),
   },
@@ -28,9 +39,9 @@ export const menuOptions: MenuOptionsInterface[] = [
   {
     title: literals.ranking,
     action: () => console.log('TODO!!'),
-  },
+  },*/
   {
     title: literals.close,
-    action: () => console.log('TODO!!'),
+    action: () => menuOnClick(),
   },
 ];
