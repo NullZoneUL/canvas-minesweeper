@@ -25,6 +25,7 @@
       "@/*": ["src/*"],
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
+      "@modal/*": ["src/modal/*"],
       "@literals*": ["src/assets/strings/literals.json"],
     }
   },

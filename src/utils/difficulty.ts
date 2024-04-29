@@ -35,3 +35,8 @@ export const getNumberOfMinesByDifficulty = (difficulty: number) => {
 
   return minesByDifficulty[difficulty];
 };
+
+export const addCustomGame = (xSize: number, ySize: number, mines: number) => {
+  difficultySizes[3] = [xSize, ySize];
+  minesByDifficulty[3] = mines;
+};
