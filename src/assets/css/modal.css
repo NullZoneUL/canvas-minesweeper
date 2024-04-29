@@ -1,0 +1,12 @@
+#modal-container {
+  position: absolute;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+#modal-container.modal-open {
+  display: flex;
+}

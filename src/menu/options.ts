@@ -1,5 +1,7 @@
+import CustomGameModal from '@/modal/modals/customGame/customGame';
 import literals from '@literals';
 import { difficulty, loadGame } from '@/main';
+import { openNewModal } from '@/modal';
 import { openCloseMenu } from './menu';
 
 const loadNewGame = () => {
@@ -32,11 +34,11 @@ export const menuOptions: MenuOptionsInterface[] = [
     title: literals.hard,
     action: () => menuOnClick(() => loadGame(2)),
   },
-  /*{
-    title: literals.custom,
-    action: () => console.log('TODO!!'),
-  },
   {
+    title: literals.custom,
+    action: () => menuOnClick(() => openNewModal(CustomGameModal())),
+  },
+  /*{
     title: literals.ranking,
     action: () => console.log('TODO!!'),
   },*/

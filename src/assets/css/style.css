@@ -23,13 +23,13 @@ main {
   height: 100vh;
   top: 0;
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .center {
   width: fit-content;
-  margin: 0 auto;
-  top: 50%;
-  transform: translateY(-50%);
   position: relative;
 }
 

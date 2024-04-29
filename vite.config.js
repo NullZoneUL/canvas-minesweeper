@@ -16,6 +16,7 @@ export default {
       '@': path.resolve(__dirname, './src'),
       '@assets': path.resolve(__dirname, './src/assets'),
       '@utils': path.resolve(__dirname, './src/utils'),
+      '@modal': path.resolve(__dirname, './src/modal'),
       '@literals': path.resolve(
         __dirname,
         './src/assets/strings/literals.json',

@@ -1,0 +1,31 @@
+.custom-game-container {
+  background-color: #bdbdbd;
+  width: max-content;
+  color: black;
+  font-family: sans-serif;
+}
+
+.custom-game-container h2 {
+  text-align: center;
+}
+
+.custom-game-inputs-container {
+  text-align: center;
+}
+
+.custom-game-inputs-container input {
+  width: 20%;
+  margin-left: 3%;
+}
+
+.custom-game-buttons-container {
+  text-align: center;
+}
+
+.custom-game-buttons-container button {
+  margin: 10px 20px;
+}
+
+.input-custom-game.input-error {
+  border: 1px solid red;
+}
