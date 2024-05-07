@@ -1,6 +1,6 @@
 import CustomGameModal from '@/modal/modals/customGame/customGame';
 import literals from '@literals';
-import { difficulty, loadGame } from '@/main';
+import { difficulty, loadGame, pauseResumeGame } from '@/main';
 import { openNewModal } from '@/modal';
 import { openCloseMenu } from './menu';
 
@@ -18,10 +18,10 @@ export const menuOptions: MenuOptionsInterface[] = [
     title: literals.new_game,
     action: () => menuOnClick(loadNewGame),
   },
-  /*{
+  {
     title: literals.pause,
-    action: () => console.log('TODO!!'),
-  },*/
+    action: () => menuOnClick(pauseResumeGame),
+  },
   {
     title: literals.easy,
     action: () => menuOnClick(() => loadGame(0)),
