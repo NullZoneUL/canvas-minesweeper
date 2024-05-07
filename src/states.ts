@@ -8,6 +8,7 @@ export enum GameStates {
   'LOADED',
   'STARTED',
   'ENDED',
+  'PAUSED',
 }
 
 export enum ResetButtonStates {
@@ -15,4 +16,5 @@ export enum ResetButtonStates {
   'CLICK',
   'WIN',
   'DEAD',
+  'PAUSE',
 }
