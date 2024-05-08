@@ -23,13 +23,13 @@ main {
   height: 100vh;
   top: 0;
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .center {
   width: fit-content;
-  margin: 0 auto;
-  top: 50%;
-  transform: translateY(-50%);
   position: relative;
 }
 
@@ -41,6 +41,33 @@ main {
   list-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .image-sources {
   display: none;
+}
+
+#menu-options {
+  position: absolute;
+  color: black;
+  background-color: #bdbdbd;
+  font-family: sans-serif;
+  border: 1px solid grey;
+}
+
+#menu-options > ul {
+  margin: 0;
+  padding: 0;
+}
+
+#menu-options li {
+  list-style: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#menu-options li:hover {
+  background-color: #979f9e;
 }

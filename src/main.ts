@@ -29,6 +29,7 @@ import {
   resetButtonImages,
 } from './images';
 import { SectionStates, GameStates, ResetButtonStates } from './states';
+import './menu/menu';
 
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -40,7 +41,7 @@ let sectionsLeft: number;
 let timer: number;
 let canvasRect: DOMRect;
 let timerInterval: number;
-let gameStatus: 0 | 1 | 2;
+let gameStatus: 0 | 1 | 2 | 3;
 let difficulty: number;
 let resetButtonPosition: number[];
 
@@ -57,7 +58,11 @@ canvas.addEventListener('click', e => {
     mapItemClicked(mapMousePositions.x, mapMousePositions.y);
   }
 
-  isClickOnResetButton(mousePos) && loadGame(difficulty || 0);
+  if (isClickOnResetButton(mousePos)) {
+    gameStatus === GameStates.PAUSED
+      ? pauseResumeGame()
+      : loadGame(difficulty || 0);
+  }
 });
 
 canvas.addEventListener('contextmenu', e => {
@@ -79,8 +84,12 @@ canvas.addEventListener('mousedown', e => {
     y: e.clientY - canvasRect.top,
   };
 
-  //If the mouse button used is not left or if the game status is ENDED, do nothing
-  if (e.button !== 0 || gameStatus === GameStates.ENDED) {
+  //If the mouse button used is not left or if the game status is ENDED or PAUSED, do nothing
+  if (
+    e.button !== 0 ||
+    gameStatus === GameStates.ENDED ||
+    gameStatus === GameStates.PAUSED
+  ) {
     return;
   }
 
@@ -104,7 +113,7 @@ const isClickOnResetButton = (mousePos: { x: number; y: number }) =>
 /****  Click functions  ****/
 
 const mapItemClicked = (x: number, y: number) => {
-  if (gameStatus === GameStates.ENDED) {
+  if (gameStatus === GameStates.ENDED || gameStatus === GameStates.PAUSED) {
     return;
   }
   gameStatus === GameStates.LOADED && startGame();
@@ -135,7 +144,7 @@ const mapItemClicked = (x: number, y: number) => {
 };
 
 const mapItemClickedRight = (x: number, y: number) => {
-  if (gameStatus === GameStates.ENDED) {
+  if (gameStatus === GameStates.ENDED || gameStatus === GameStates.PAUSED) {
     return;
   }
   const mapPosX = getMapPosition(x);
@@ -348,6 +357,18 @@ const displayItem = (x: number, y: number) => {
 
 /****  Game state functions  ****/
 
+const pauseResumeGame = () => {
+  if (gameStatus === GameStates.STARTED) {
+    gameStatus = GameStates.PAUSED;
+    clearInterval(timerInterval);
+    printResetButton(ResetButtonStates.PAUSE);
+  } else if (gameStatus === GameStates.PAUSED) {
+    gameStatus = GameStates.STARTED;
+    startGame();
+    printResetButton(ResetButtonStates.NORMAL);
+  }
+};
+
 const lostGame = () => {
   console.log('You lose!!!');
   printResetButton(ResetButtonStates.DEAD);
@@ -400,4 +421,4 @@ window.addEventListener('load', () => {
   loadGame(0);
 });
 
-export { loadGame };
+export { difficulty, loadGame, pauseResumeGame };

@@ -20,8 +20,13 @@
           <ul>
             <li><button id="options">Options</button></li>
           </ul>
+          <div id="menu-options" style="display: none">
+            <ul></ul>
+          </div>
           <canvas id="layout"></canvas>
         </div>
+
+        <div id="modal-container"></div>
         <div class="image-sources">
           <section>
             <img
@@ -126,11 +131,11 @@
             <img src="./src/assets/images/face/dead.gif" id="faceDead" />
             <img src="./src/assets/images/face/normal.gif" id="faceNormal" />
             <img src="./src/assets/images/face/win.gif" id="faceWin" />
+            <img src="./src/assets/images/face/pause.gif" id="facePause" />
           </section>
         </div>
       </main>
     </div>
     <script type="module" src="/src/main.ts"></script>
-    <script type="module" src="/src/buttonEvents.ts"></script>
   </body>
 </html>

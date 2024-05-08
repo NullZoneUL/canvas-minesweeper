@@ -53,4 +53,5 @@ export const resetButtonImages = [
   document.getElementById('faceClick') as HTMLImageElement,
   document.getElementById('faceWin') as HTMLImageElement,
   document.getElementById('faceDead') as HTMLImageElement,
+  document.getElementById('facePause') as HTMLImageElement,
 ];
