@@ -8,6 +8,8 @@ import { loadGame } from '@/main';
 import { closeModal } from '@/modal';
 import './style.css';
 
+const MIN_VALUE = 5;
+
 const CustomGameModal = () => {
   const container = divElement('custom-game-container');
 
@@ -15,11 +17,20 @@ const CustomGameModal = () => {
   container.appendChild(title);
 
   const inputsContainer = divElement('custom-game-inputs-container');
-  const sizeX = inputNumberElement('input-custom-game', literals.size_x);
-  const sizeY = inputNumberElement('input-custom-game', literals.size_y);
+  const sizeX = inputNumberElement(
+    'input-custom-game',
+    literals.size_x,
+    MIN_VALUE,
+  );
+  const sizeY = inputNumberElement(
+    'input-custom-game',
+    literals.size_y,
+    MIN_VALUE,
+  );
   const numberOfMines = inputNumberElement(
     'input-custom-game',
     literals.number_mines,
+    MIN_VALUE,
   );
   inputsContainer.appendChild(sizeX);
   inputsContainer.appendChild(sizeY);
@@ -31,6 +42,21 @@ const CustomGameModal = () => {
     const mines = parseInt(numberOfMines.value);
     const x = parseInt(sizeX.value);
     const y = parseInt(sizeY.value);
+
+    if (x < MIN_VALUE) {
+      sizeX.classList.add('input-error');
+      return;
+    }
+
+    if (y < MIN_VALUE) {
+      sizeY.classList.add('input-error');
+      return;
+    }
+
+    if (mines < MIN_VALUE) {
+      numberOfMines.classList.add('input-error');
+      return;
+    }
 
     if (mines > x * y) {
       sizeX.classList.add('input-error');
