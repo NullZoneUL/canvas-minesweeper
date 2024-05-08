@@ -1,6 +1,7 @@
 const inputNumberElement = (
   className: string,
   placeholder: string,
+  minValue?: number,
   id?: string,
 ) => {
   const input = document.createElement('input');
@@ -10,6 +11,10 @@ const inputNumberElement = (
 
   if (id) {
     input.id = id;
+  }
+
+  if (minValue !== null && minValue !== undefined) {
+    input.min = minValue.toString();
   }
 
   return input;
