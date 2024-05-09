@@ -31,6 +31,7 @@ import {
 import { SectionStates, GameStates, ResetButtonStates } from './states';
 import './menu/menu';
 
+const SAVED_DIFFICULTY_ID = 'lastDifficulty';
 const canvas = document.getElementById('layout') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
@@ -413,12 +414,17 @@ const loadGame = (gameDifficulty: number) => {
   printTimerCounter();
   printResetButton(ResetButtonStates.NORMAL);
   printMap();
+
+  if (gameDifficulty >= 0 && gameDifficulty <= 2) {
+    localStorage.setItem(SAVED_DIFFICULTY_ID, gameDifficulty.toString());
+  }
 };
 
 /********************************/
 
 window.addEventListener('load', () => {
-  loadGame(0);
+  const savedDifficulty = localStorage.getItem(SAVED_DIFFICULTY_ID);
+  loadGame(!!savedDifficulty ? parseInt(savedDifficulty) : 1);
 });
 
 export { difficulty, loadGame, pauseResumeGame };
