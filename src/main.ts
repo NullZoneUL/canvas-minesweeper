@@ -154,6 +154,12 @@ const mapItemClickedRight = (x: number, y: number) => {
   if (gameStatus === GameStates.ENDED || gameStatus === GameStates.PAUSED) {
     return;
   }
+
+  if (gameStatus === GameStates.LOADED) {
+    map = createMap(difficulty, -1, -1);
+    startGame();
+  }
+
   const mapPosX = getMapPosition(x);
   const mapPosY = getMapPosition(y);
   const item = map[mapPosY][mapPosX];

@@ -12,13 +12,15 @@ const createMap = (difficulty: number, clickX: number, clickY: number) => {
   const map: MapSectionInterface[][] = [];
   const clickBoundaries: { [key: string]: number[] } = {};
 
-  clickBoundaries[clickY] = [clickX];
-  getBoundaries(clickX, clickY, mapSize, (x_: number, y_: number) => {
-    if (!clickBoundaries[y_]) {
-      clickBoundaries[y_] = [];
-    }
-    clickBoundaries[y_].push(x_);
-  });
+  if (clickX > -1 && clickY > -1) {
+    clickBoundaries[clickY] = [clickX];
+    getBoundaries(clickX, clickY, mapSize, (x_: number, y_: number) => {
+      if (!clickBoundaries[y_]) {
+        clickBoundaries[y_] = [];
+      }
+      clickBoundaries[y_].push(x_);
+    });
+  }
 
   for (let i = 0; i < mapSize[1]; i++) {
     map.push([]);
