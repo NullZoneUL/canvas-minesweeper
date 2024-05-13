@@ -117,9 +117,15 @@ const mapItemClicked = (x: number, y: number) => {
   if (gameStatus === GameStates.ENDED || gameStatus === GameStates.PAUSED) {
     return;
   }
-  gameStatus === GameStates.LOADED && startGame();
+
   const mapPosX = getMapPosition(x);
   const mapPosY = getMapPosition(y);
+
+  if (gameStatus === GameStates.LOADED) {
+    map = createMap(difficulty, mapPosX, mapPosY);
+    startGame();
+  }
+
   const item = map[mapPosY][mapPosX];
 
   //If the item is marked or already clicked, nothing else is executed
@@ -148,6 +154,12 @@ const mapItemClickedRight = (x: number, y: number) => {
   if (gameStatus === GameStates.ENDED || gameStatus === GameStates.PAUSED) {
     return;
   }
+
+  if (gameStatus === GameStates.LOADED) {
+    map = createMap(difficulty, -1, -1);
+    startGame();
+  }
+
   const mapPosX = getMapPosition(x);
   const mapPosY = getMapPosition(y);
   const item = map[mapPosY][mapPosX];
@@ -190,18 +202,28 @@ const setSizeByDifficulty = () => {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 };
 
-const printMap = (displayMines = false) => {
+const printFirstMapState = () => {
+  const mapSize = getMapSizeByDifficulty(difficulty);
+  let x_ = borderSize;
+  let y_ = headerSize;
+  for (let i = 0; i < mapSize[1]; i++) {
+    for (let x = 0; x < mapSize[0]; x++) {
+      ctx.drawImage(uncheckedSectionImage, x_, y_, sectionSize, sectionSize);
+      x_ += sectionSize;
+    }
+    y_ += sectionSize;
+    x_ = borderSize;
+  }
+};
+
+const printFullMap = () => {
   let x = borderSize;
   let y = headerSize;
   let positionX = 0;
   let positionY = 0;
   map.forEach(row => {
     row.forEach(() => {
-      if (!displayMines) {
-        ctx.drawImage(uncheckedSectionImage, x, y, sectionSize, sectionSize);
-      } else {
-        updateMapItem(positionX, positionY, true);
-      }
+      updateMapItem(positionX, positionY, true);
       x += sectionSize;
       positionX++;
     });
@@ -373,7 +395,7 @@ const pauseResumeGame = () => {
 const lostGame = () => {
   console.log('You lose!!!');
   printResetButton(ResetButtonStates.DEAD);
-  printMap(true);
+  printFullMap();
   onGameEnded();
 };
 
@@ -406,14 +428,13 @@ const loadGame = (gameDifficulty: number) => {
   setSizeByDifficulty();
   setResetButtonPosition();
   timer = 0;
-  map = createMap(difficulty);
   gameStatus = GameStates.LOADED;
   emptyBoundaries = [];
 
   printMineCounter();
   printTimerCounter();
   printResetButton(ResetButtonStates.NORMAL);
-  printMap();
+  printFirstMapState();
 
   if (gameDifficulty >= 0 && gameDifficulty <= 2) {
     localStorage.setItem(SAVED_DIFFICULTY_ID, gameDifficulty.toString());
