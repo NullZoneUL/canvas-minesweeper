@@ -6,10 +6,19 @@ import {
   getNumberOfMinesByDifficulty,
 } from './difficulty';
 
-const createMap = (difficulty: number) => {
+const createMap = (difficulty: number, clickX: number, clickY: number) => {
   const mapSize = getMapSizeByDifficulty(difficulty);
   const numberOfMines = getNumberOfMinesByDifficulty(difficulty);
   const map: MapSectionInterface[][] = [];
+  const clickBoundaries: { [key: string]: number[] } = {};
+
+  clickBoundaries[clickY] = [clickX];
+  getBoundaries(clickX, clickY, mapSize, (x_: number, y_: number) => {
+    if (!clickBoundaries[y_]) {
+      clickBoundaries[y_] = [];
+    }
+    clickBoundaries[y_].push(x_);
+  });
 
   for (let i = 0; i < mapSize[1]; i++) {
     map.push([]);
@@ -29,7 +38,7 @@ const createMap = (difficulty: number) => {
     let y = getRandomNumber(0, maxY);
     let x = getRandomNumber(0, maxX);
 
-    while (!!map[y][x]?.mine) {
+    while (!!map[y][x]?.mine || clickBoundaries[y]?.indexOf(x) > -1) {
       y = getRandomNumber(0, maxY);
       x = getRandomNumber(0, maxX);
     }

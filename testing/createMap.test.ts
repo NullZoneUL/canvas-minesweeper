@@ -4,17 +4,22 @@ import {
   getNumberOfMinesByDifficulty,
 } from '@utils/difficulty';
 
+const getRandomInt = (max: number) => Math.floor(Math.random() * max);
+
 const testFunction = (difficulty: number) => {
   const mapSize = getMapSizeByDifficulty(difficulty);
   const mines = getNumberOfMinesByDifficulty(difficulty);
 
   [...Array(100)].forEach(() => {
-    const map = createMap(difficulty);
+    const clickX = getRandomInt(mapSize[0] - 1);
+    const clickY = getRandomInt(mapSize[1] - 1);
+    const map = createMap(difficulty, clickX, clickY);
     let numMapMines = 0;
 
     map.forEach(arrow => arrow.forEach(item => item.mine && numMapMines++));
     expect(mapSize).toEqual([map[0]?.length, map.length]);
     expect(mines).toEqual(numMapMines);
+    expect(map[clickY][clickX].mine).toBe(false);
   });
 };
 
