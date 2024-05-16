@@ -8,6 +8,14 @@ const difficultySizes = [
 
 const minesByDifficulty = [10, 40, 99];
 
+export const validRegularDifficulty = (difficulty: number) => {
+  if (difficulty < 0 || difficulty > 2) {
+    return false;
+  }
+
+  return true;
+};
+
 export const getMapSizeByDifficulty = (difficulty: number) => {
   if (difficulty < 0) {
     console.error(literals.error_messages.difficulty_less_than_0);

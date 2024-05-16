@@ -1,4 +1,5 @@
 import CustomGameModal from '@/modal/modals/customGame/customGame';
+import RankingModal from '@/modal/modals/ranking/ranking';
 import literals from '@literals';
 import { difficulty, loadGame, pauseResumeGame } from '@/main';
 import { openNewModal } from '@/modal';
@@ -38,10 +39,10 @@ export const menuOptions: MenuOptionsInterface[] = [
     title: literals.custom,
     action: () => menuOnClick(() => openNewModal(CustomGameModal())),
   },
-  /*{
+  {
     title: literals.ranking,
-    action: () => console.log('TODO!!'),
-  },*/
+    action: () => menuOnClick(() => openNewModal(RankingModal())),
+  },
   {
     title: literals.close,
     action: () => menuOnClick(),

@@ -1,6 +1,6 @@
 import divElement from '@modal/elements/div';
 import h2Element from '@modal/elements/h2';
-import inputNumberElement from '@/modal/elements/inputNumber';
+import inputNumberElement from '@modal/elements/inputNumber';
 import buttonElement from '@modal/elements/button';
 import literals from '@literals';
 import { addCustomGame } from '@utils/difficulty';

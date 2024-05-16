@@ -1,0 +1,27 @@
+.new-record-container {
+  background-color: #bdbdbd;
+  color: black;
+  font-family: sans-serif;
+  width: 300px;
+}
+
+.new-record-container h2 {
+  text-align: center;
+}
+
+.new-record-container input {
+  width: 70%;
+  margin-left: 15%;
+}
+
+.new-record-buttons-container {
+  text-align: center;
+}
+
+.new-record-buttons-container button {
+  margin: 10px 20px;
+}
+
+.input-new-record.input-error {
+  border: 1px solid red;
+}
