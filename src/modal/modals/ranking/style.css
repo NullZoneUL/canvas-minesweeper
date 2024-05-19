@@ -1,0 +1,27 @@
+.ranking-container {
+  background-color: #bdbdbd;
+  width: max-content;
+  color: black;
+  font-family: sans-serif;
+}
+
+.ranking-container > h2 {
+  padding: 0 20px;
+}
+
+.ranking-container > select {
+  margin-left: 20px;
+}
+
+.ranking-container .table-container {
+  padding: 10px 20px;
+}
+
+.ranking-container .table-container td {
+  border: 1px solid black;
+}
+
+.ranking-container .ranking-btn-close {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}

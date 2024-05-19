@@ -5,16 +5,6 @@ import { openNewModal } from '@modal/index';
 const ID = 'SAVED_GAMES';
 const MAX_ITEMS_BY_DIFFICULTY = 20;
 
-const getRanking = (): RankingInterface => {
-  const stringRanking = localStorage.getItem(ID) as string;
-  return JSON.parse(stringRanking);
-};
-
-const setRanking = (ranking: RankingInterface) => {
-  const stringify = JSON.stringify(ranking);
-  localStorage.setItem(ID, stringify);
-};
-
 const getRankingByDifficulty = (difficulty: number) => {
   if (!validRegularDifficulty(difficulty)) {
     return;
@@ -62,9 +52,18 @@ const addNewRecord = (name: string, time: number, difficulty: number) => {
   setRanking(allRankings);
 };
 
+const setRanking = (ranking: RankingInterface) => {
+  const stringify = JSON.stringify(ranking);
+  localStorage.setItem(ID, stringify);
+};
+
+export const getRanking = (): RankingInterface => {
+  const stringRanking = localStorage.getItem(ID) as string;
+  return JSON.parse(stringRanking);
+};
+
 export const checkRanking = () => {
   if (localStorage.getItem(ID)) {
-    console.log(getRanking());
     return;
   }
 
