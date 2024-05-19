@@ -29,6 +29,7 @@ import {
   resetButtonImages,
 } from './images';
 import { SectionStates, GameStates, ResetButtonStates } from './states';
+import { checkRanking, newWinOpenModal } from './ranking';
 import './menu/menu';
 
 const SAVED_DIFFICULTY_ID = 'lastDifficulty';
@@ -407,6 +408,7 @@ const win = () => {
   console.log('You win!!');
   printResetButton(ResetButtonStates.WIN);
   onGameEnded();
+  newWinOpenModal(timer, difficulty);
 };
 
 const onGameEnded = () => {
@@ -446,6 +448,7 @@ const loadGame = (gameDifficulty: number) => {
 window.addEventListener('load', () => {
   const savedDifficulty = localStorage.getItem(SAVED_DIFFICULTY_ID);
   loadGame(!!savedDifficulty ? parseInt(savedDifficulty) : 1);
+  checkRanking();
 });
 
 export { difficulty, loadGame, pauseResumeGame };
