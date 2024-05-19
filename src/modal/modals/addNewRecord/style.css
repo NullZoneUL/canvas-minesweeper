@@ -1,7 +1,7 @@
 .new-record-container {
-  background-color: #bdbdbd;
+  background-color: var(--modal-background);
   color: black;
-  font-family: sans-serif;
+  font-family: var(--modal-font-family);
   width: 300px;
 }
 

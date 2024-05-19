@@ -1,3 +1,8 @@
+:root {
+  --modal-background: #bdbdbd;
+  --modal-font-family: sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -52,8 +57,8 @@ button {
 #menu-options {
   position: absolute;
   color: black;
-  background-color: #bdbdbd;
-  font-family: sans-serif;
+  background-color: var(--modal-background);
+  font-family: var(--modal-font-family);
   border: 1px solid grey;
 }
 
