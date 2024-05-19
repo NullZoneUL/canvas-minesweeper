@@ -40,7 +40,9 @@ const addNewRecord = (name: string, time: number, difficulty: number) => {
     }
   }
 
-  if (ranking.length === 0) {
+  if (
+    ranking.findIndex(item => item.name === name && item.time === time) === -1
+  ) {
     ranking.push({ name, time });
   }
 
