@@ -1,3 +1,4 @@
+import debounce from 'lodash.debounce';
 import createMap from '@utils/createMap';
 import checkNumberLimits from '@utils/checkNumberLimits';
 import getNumberByDigits from '@utils/getNumberByDigits';
@@ -444,6 +445,12 @@ const loadGame = (gameDifficulty: number) => {
 };
 
 /********************************/
+
+const resizeDebounce = debounce(
+  () => (canvasRect = canvas.getBoundingClientRect()),
+  300,
+);
+window.addEventListener('resize', resizeDebounce);
 
 window.addEventListener('load', () => {
   const savedDifficulty = localStorage.getItem(SAVED_DIFFICULTY_ID);
