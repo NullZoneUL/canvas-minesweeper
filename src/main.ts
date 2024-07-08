@@ -28,6 +28,9 @@ import {
   mineImage,
   noMineImage,
   resetButtonImages,
+  simpleBorder,
+  cornerBorders,
+  cornerIntersections,
 } from './images';
 import { SectionStates, GameStates, ResetButtonStates } from './states';
 import { checkRanking, newWinOpenModal } from './ranking';
@@ -325,6 +328,70 @@ const setResetButtonPosition = () => {
   resetButtonPosition = [canvas.width / 2 - resetButtonSize / 2, borderSize];
 };
 
+const printBorders = () => {
+  const mapSize = getMapSizeByDifficulty(difficulty);
+  const mapWidth = sectionSize * mapSize[0];
+  const mapHeight = sectionSize * mapSize[1];
+  const underHeader = headerSize - borderSize;
+  const bottom = headerSize + mapHeight;
+  const right = mapWidth + borderSize;
+
+  ctx.drawImage(simpleBorder, borderSize, 0, mapWidth, borderSize);
+  ctx.drawImage(simpleBorder, borderSize, underHeader, mapWidth, borderSize);
+  ctx.drawImage(simpleBorder, borderSize, bottom, mapWidth, borderSize);
+  printRotatedImage(
+    simpleBorder,
+    0,
+    bottom + borderSize,
+    -90,
+    mapHeight + underHeader,
+    borderSize,
+    borderSize,
+    0,
+  );
+  printRotatedImage(
+    simpleBorder,
+    right,
+    bottom + borderSize,
+    -90,
+    mapHeight + underHeader,
+    borderSize,
+    borderSize,
+    0,
+  );
+
+  ctx.drawImage(cornerBorders[0], right, 0, borderSize, borderSize);
+  ctx.drawImage(cornerBorders[1], 0, 0, borderSize, borderSize);
+  ctx.drawImage(cornerBorders[2], 0, bottom, borderSize, borderSize);
+  ctx.drawImage(cornerBorders[3], right, bottom, borderSize, borderSize);
+
+  ctx.drawImage(cornerIntersections[0], 0, underHeader, borderSize, borderSize);
+  ctx.drawImage(
+    cornerIntersections[1],
+    right,
+    underHeader,
+    borderSize,
+    borderSize,
+  );
+};
+
+const printRotatedImage = (
+  image: HTMLImageElement,
+  x: number,
+  y: number,
+  angle: number,
+  width: number,
+  height: number,
+  imageX: number,
+  imageY: number,
+) => {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((angle * Math.PI) / 180);
+  ctx.drawImage(image, imageX, imageY, width, height);
+  ctx.restore();
+};
+
 /***************************/
 
 /****  Map behavior functions  ****/
@@ -434,6 +501,7 @@ const loadGame = (gameDifficulty: number) => {
   gameStatus = GameStates.LOADED;
   emptyBoundaries = [];
 
+  printBorders();
   printMineCounter();
   printTimerCounter();
   printResetButton(ResetButtonStates.NORMAL);
