@@ -1,5 +1,7 @@
 # The old minesweeper made with canvas
 
+![image](https://github.com/NullZoneUL/canvas-minesweeper/assets/43152994/4f301c52-f5de-4dfa-a472-805852a2d545)
+
 ** ***Important! [Node](https://nodejs.org/en/download) and [pnpm](https://pnpm.io/installation) must be installed to run this project.*** **
 <br>
 Node version: **18.12.1**
