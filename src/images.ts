@@ -22,6 +22,22 @@ export const questionMarkImage = document.getElementById(
   'questionMarkImage',
 ) as HTMLImageElement;
 
+export const simpleBorder = document.getElementById(
+  'borderSimple',
+) as HTMLImageElement;
+
+export const cornerBorders = [
+  document.getElementById('borderCorner') as HTMLImageElement,
+  document.getElementById('borderCornerWhite') as HTMLImageElement,
+  document.getElementById('borderCornerWhiteGrey') as HTMLImageElement,
+  document.getElementById('borderCornerGrey') as HTMLImageElement,
+];
+
+export const cornerIntersections = [
+  document.getElementById('borderIntersectionLeft') as HTMLImageElement,
+  document.getElementById('borderIntersectionRight') as HTMLImageElement,
+];
+
 export const mapImageNumbers = [
   document.getElementById('emptySectionImage') as HTMLImageElement,
   document.getElementById('oneMapImage') as HTMLImageElement,
